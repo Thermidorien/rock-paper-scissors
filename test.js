@@ -26,22 +26,25 @@ function getPlayerSelection() {
 
 function playRound(playerSelection, computerSelection) {
     if (((playerSelection === 'ROCK') && (computerSelection === 'SCISSORS')) || ((playerSelection === 'PAPER') && (computerSelection === 'ROCK')) || ((playerSelection === 'SCISSORS') && (computerSelection === 'PAPER'))) {
-        alert('You won the round');
+        //alert('You won the round');
+        console.log('won turn')
         return 'VICTORY!';
     }
-    else if (((playerSelection === 'SCISSORS') && (computerSelection === 'ROCK')) || ((playerSelection === 'ROCK') && (computerSelection === 'SCISSORS')) || ((playerSelection === 'PAPER') && (computerSelection === 'SCISSORS')))  {
-        alert('You lost the round');
+    else if (((playerSelection === 'SCISSORS') && (computerSelection === 'ROCK')) || ((playerSelection === 'ROCK') && (computerSelection === 'PAPER')) || ((playerSelection === 'PAPER') && (computerSelection === 'SCISSORS')))  {
+        //alert('You lost the round');
+        console.log('lost turn')
         return 'YOU LOSE!';
     }
     else if (playerSelection === computerSelection) {
-        alert('You drew the round');
+        //alert('You drew the round');
+        console.log('drew turn')
         return 'Draw.';
     }
 }
 
 function game() {
     alert('Let\'s play RPS!');
-    var numberOfWins = prompt('First to how many victories wins the game?','5');
+    var numberOfWins = prompt('First to how many victories wins the game?','1');
     var numberOfWins = parseInt(numberOfWins);
 
     var playerVictories = 0;
