@@ -1,4 +1,16 @@
 // randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’. 
+
+const rockButton = document.getElementById("rock");
+const paperButton = document.getElementById("paper");
+const scissorsButton = document.getElementById("scissors");
+const results = document.getElementById("results");
+
+let playerVictories = 0;
+let computerVictories = 0;
+
+let numberOfWins = 3;
+
+
 function getComputerChoice() {
     var computerChoice = Math.floor(Math.random() * 3);
     if (computerChoice === 0) {
@@ -13,7 +25,7 @@ function getComputerChoice() {
     return 'ERROR'
 }
 
-function getPlayerSelection() {
+/* function getPlayerSelection() {
     var playerSelection = prompt('Select \'rock\', \'paper\' or \'scissors\'');
     playerSelection = playerSelection.toUpperCase();
     
@@ -22,7 +34,7 @@ function getPlayerSelection() {
         playerSelection = playerSelection.toUpperCase();
     }
     return playerSelection;
-}
+} */
 
 function playRound(playerSelection, computerSelection) {
     if (((playerSelection === 'ROCK') && (computerSelection === 'SCISSORS')) || ((playerSelection === 'PAPER') && (computerSelection === 'ROCK')) || ((playerSelection === 'SCISSORS') && (computerSelection === 'PAPER'))) {
@@ -42,38 +54,51 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game() {
-    alert('Let\'s play RPS!');
-    var numberOfWins = prompt('First to how many victories wins the game?','1');
-    var numberOfWins = parseInt(numberOfWins);
+function disableButtons() {
+    rockButton.disabled = true;
+    paperButton.disabled = true;
+    scissorsButton.disabled = true;
+}
 
-    var playerVictories = 0;
-    var computerVictories = 0;
+function game(playerSelection) {
+
+    //var numberOfWins = prompt('RPS. How many victories wins the game?','3');
+    //var numberOfWins = parseInt(numberOfWins);
     
-    while (playerVictories < numberOfWins && computerVictories < numberOfWins) {
-        var computerSelection = getComputerChoice();
-        var playerSelection = getPlayerSelection();
-        var winner = playRound(playerSelection, computerSelection);
-        if (winner === 'VICTORY!') {
-            playerVictories++;
-            console.log('Player wins: ', playerVictories);
-        }
-        else if (winner === 'YOU LOSE!') {
-            computerVictories++;
-            console.log('Computer wins: ', computerVictories);
-        }
+
+    var computerSelection = getComputerChoice();
+    /* var playerSelection = getPlayerSelection(); */
+    var winner = playRound(playerSelection, computerSelection);
+
+    if (winner === 'VICTORY!') {
+        playerVictories++;
+        console.log('Player wins: ', playerVictories);
+    }
+    else if (winner === 'YOU LOSE!') {
+        computerVictories++;
+        console.log('Computer wins: ', computerVictories);
     }
 
-    if (playerVictories > computerVictories) {
+    results.innerHTML = "Player wins: " + playerVictories + "<br>" + "Computer wins: " + computerVictories;
+
+    if (playerVictories >= numberOfWins) {
+        results.textContent.innerHTML += "<br><br>Congratulations! <br><br>YOU WIN! Reload the page to play again.";
+        disableButtons();
         console.log('Congratulations! YOU WIN!');
-        alert('Congratulations! YOU WIN!');
+        //alert('Congratulations! YOU WIN!');
     }
-    else if (playerVictories < computerVictories) { 
+    else if (computerVictories >= numberOfWins) { 
+        results.innerHTML += "<br><br>Sorry! YOU LOSE! <br><br>Reload the page to play again.";
+        disableButtons();
         console.log('Sorry! YOU LOSE!');
-        alert('Sorry! YOU LOSE!');
+        //alert('Sorry! YOU LOSE!');
     }
 }
 
-game();
+rockButton.addEventListener('click', function() {game('ROCK');});
+paperButton.addEventListener('click', function() {game('PAPER');});
+scissorsButton.addEventListener('click', function() {game('SCISSORS');});
+
+
 
 
